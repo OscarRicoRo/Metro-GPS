@@ -109,15 +109,18 @@ def graph_search(problem, fringe):
     return None
 
 
+
 def breadth_first_graph_search(problem):
     """Search the shallowest nodes in the search tree first. [p 74]"""
     return graph_search(problem, FIFOQueue())  # FIFOQueue -> fringe
-
 
 def depth_first_graph_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
     return graph_search(problem, Stack())
 
+def shortest_first_graph_search(problem):
+    """Search the deepest nodes in the search tree first. [p 74]"""
+    return graph_search(problem, ShortestQueue())
 
 
 # _____________________________________________________________________________
