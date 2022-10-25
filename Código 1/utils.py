@@ -1,4 +1,5 @@
-
+import math
+import search
 #______________________________________________________________________________
 # Simple Data Structures: infinity, Dict, Struct
 
@@ -506,8 +507,8 @@ class Queue:
     Note that isinstance(Stack(), Queue) is false, because we implement stacks
     as lists.  If Python ever gets interfaces, Queue will be an interface."""
 
-    def __init__(self):
-        abstract
+    def __init__(self, problem = None):
+        self.problem = problem
 
     def extend(self, items):
         for item in items:
@@ -568,6 +569,40 @@ class ShortestQueue(Queue):
             self.A = self.A[self.start:]
             self.start = 0
         return e
+
+class IntellQueue(Queue):
+    """A Shortest Queue."""
+
+    def __init__(self,problem):
+        self.problem = problem
+        self.A = []
+        self.start = 0
+
+    def append(self, item):
+        self.A.append(item)
+
+    def __len__(self):
+        return len(self.A) - self.start
+
+    def extend(self, items):
+        self.A.extend(items)
+        self.A.sort(key= lambda x: self.h(x) + x.path_cost)
+
+    def pop(self):
+        e = self.A[self.start]
+        self.start += 1
+        if self.start > 5 and self.start > len(self.A) / 2:
+            self.A = self.A[self.start:]
+            self.start = 0
+        return e
+
+    def h(self, node):
+        """h function is straight-line distance from a node's state to goal."""
+        locs = getattr(self.problem.graph, 'locations', None)
+        if locs:
+            return int(distance(locs[node.state], locs[self.problem.goal]))
+        else:
+            return infinity
 
 
 ## Fig: The idea is we can define things like Fig[3,10] later.

@@ -122,6 +122,10 @@ def shortest_first_graph_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
     return graph_search(problem, ShortestQueue())
 
+def intell_first_graph_search(problem):
+    """Search the deepest nodes in the search tree first. [p 74]"""
+    return graph_search(problem, IntellQueue(problem))
+
 
 # _____________________________________________________________________________
 # The remainder of this file implements examples for the search algorithms.
