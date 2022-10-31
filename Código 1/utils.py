@@ -507,12 +507,19 @@ class Queue:
     Note that isinstance(Stack(), Queue) is false, because we implement stacks
     as lists.  If Python ever gets interfaces, Queue will be an interface."""
 
-    def __init__(self, problem = None):
-        self.problem = problem
-
+    def __init__(self):
+        abstract
     def extend(self, items):
         for item in items:
             self.append(item)
+
+"""    def h(self, node, problem):
+        h function is straight-line distance from a node's state to goal.
+        locs = getattr(problem.graph, 'locations', None)
+        if locs:
+            return int(distance(locs[node.state], locs[problem.goal]))
+        else:
+            return infinity"""
 
 
 def Stack():
@@ -573,8 +580,9 @@ class ShortestQueue(Queue):
 class IntellQueue(Queue):
     """A Shortest Queue."""
 
-    def __init__(self,problem):
+    def __init__(self, problem, h):
         self.problem = problem
+        self.h = h
         self.A = []
         self.start = 0
 
@@ -587,6 +595,11 @@ class IntellQueue(Queue):
     def extend(self, items):
         self.A.extend(items)
         self.A.sort(key= lambda x: self.h(x) + x.path_cost)
+        #self.A.sort(key= lambda x: Queue.h(self, x, self.problem) + x.path_cost)
+        """
+            for i in items:
+            print (Queue.h(self, i, self.problem))
+        """
 
     def pop(self):
         e = self.A[self.start]
@@ -596,13 +609,15 @@ class IntellQueue(Queue):
             self.start = 0
         return e
 
+    """
     def h(self, node):
-        """h function is straight-line distance from a node's state to goal."""
+        h function is straight-line distance from a node's state to goal.
         locs = getattr(self.problem.graph, 'locations', None)
         if locs:
             return int(distance(locs[node.state], locs[self.problem.goal]))
         else:
             return infinity
+    """
 
 
 ## Fig: The idea is we can define things like Fig[3,10] later.

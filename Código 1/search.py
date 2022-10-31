@@ -85,8 +85,7 @@ class Node:
 
     def expand(self, problem):
         """Return a list of nodes reachable from this node. [Fig. 3.8]"""
-        return [Node(next, self, act,
-                     problem.path_cost(self.path_cost, self.state, act, next))
+        return [Node(next, self, act, problem.path_cost(self.path_cost, self.state, act, next))
                 for (act, next) in problem.successor(self.state)]
 
 
@@ -124,7 +123,7 @@ def shortest_first_graph_search(problem):
 
 def intell_first_graph_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
-    return graph_search(problem, IntellQueue(problem))
+    return graph_search(problem, IntellQueue(problem, problem.h))
 
 
 # _____________________________________________________________________________
