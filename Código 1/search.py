@@ -123,7 +123,7 @@ def shortest_first_graph_search(problem):
 
 def intell_first_graph_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
-    return graph_search(problem, IntellQueue(problem, problem.h))
+    return graph_search(problem, IntellQueue(problem.h))
 
 
 # _____________________________________________________________________________

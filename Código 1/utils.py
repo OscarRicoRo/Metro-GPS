@@ -1,6 +1,7 @@
 import math
 import search
-#______________________________________________________________________________
+
+# ______________________________________________________________________________
 # Simple Data Structures: infinity, Dict, Struct
 
 infinity = 1.0e400
@@ -62,7 +63,7 @@ def update(x, **entries):
     return x
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 # Functions on Sequences (mostly inspired by Common Lisp)
 # NOTE: Sequence functions (count_if, find_if, every, some) take function
 # argument first (like reduce, filter, and map).
@@ -153,7 +154,7 @@ def isin(elt, seq):
     return False
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 # Functions on sequences of numbers
 # NOTE: these take the sequence argument first, like min and max,
 # and like standard math notation: \sigma (i = 1..n) fn(i)
@@ -229,7 +230,7 @@ def argmax_random_tie(seq, fn):
     return argmin_random_tie(seq, lambda x: -fn(x))
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 # Statistical and mathematical functions
 
 def histogram(values, mode=0, bin_function=None):
@@ -341,6 +342,7 @@ def normalize(numbers, total=1.0):
     k = total / sum(numbers)
     return [k * n for n in numbers]
 
+
 ## OK, the following are not as widely useful utilities as some of the other
 ## functions here, but they do show up wherever we have 2D grids: Wumpus and
 ## Vacuum worlds, TicTacToe and Checkers, and markov decision Processes.
@@ -380,7 +382,7 @@ def clip(vector, lowest, highest):
     return type(vector)(list(map(min, list(map(max, vector, lowest)), highest)))
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 # Misc Functions
 
 def printf(format, *args):
@@ -491,7 +493,7 @@ def DataFile(name, mode='r'):
     return AIMAFile(['..', 'data', name], mode)
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 # Queues: Stack, FIFOQueue
 
 class Queue:
@@ -509,9 +511,11 @@ class Queue:
 
     def __init__(self):
         abstract
+
     def extend(self, items):
         for item in items:
             self.append(item)
+
 
 """    def h(self, node, problem):
         h function is straight-line distance from a node's state to goal.
@@ -567,7 +571,7 @@ class ShortestQueue(Queue):
 
     def extend(self, items):
         self.A.extend(items)
-        self.A.sort(key= lambda x: x.path_cost)
+        self.A.sort(key=lambda x: x.path_cost)
 
     def pop(self):
         e = self.A[self.start]
@@ -577,11 +581,11 @@ class ShortestQueue(Queue):
             self.start = 0
         return e
 
+
 class IntellQueue(Queue):
     """A Shortest Queue."""
 
-    def __init__(self, problem, h):
-        self.problem = problem
+    def __init__(self, h):
         self.h = h
         self.A = []
         self.start = 0
@@ -594,12 +598,7 @@ class IntellQueue(Queue):
 
     def extend(self, items):
         self.A.extend(items)
-        self.A.sort(key= lambda x: self.h(x) + x.path_cost)
-        #self.A.sort(key= lambda x: Queue.h(self, x, self.problem) + x.path_cost)
-        """
-            for i in items:
-            print (Queue.h(self, i, self.problem))
-        """
+        self.A.sort(key=lambda x: self.h(x) + x.path_cost)
 
     def pop(self):
         e = self.A[self.start]
@@ -609,20 +608,7 @@ class IntellQueue(Queue):
             self.start = 0
         return e
 
-    """
-    def h(self, node):
-        h function is straight-line distance from a node's state to goal.
-        locs = getattr(self.problem.graph, 'locations', None)
-        if locs:
-            return int(distance(locs[node.state], locs[self.problem.goal]))
-        else:
-            return infinity
-    """
-
 
 ## Fig: The idea is we can define things like Fig[3,10] later.
 ## Alas, it is Fig[3,10] not Fig[3.10], because that would be the same as Fig[3.1]
 Fig = {}
-
-
-
