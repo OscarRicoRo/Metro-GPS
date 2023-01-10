@@ -3,11 +3,22 @@
 import search
 
 ab = search.GPSProblem('A', 'B', search.romania)
+ob = search.GPSProblem('O', 'B', search.romania)
 
+print("Búsqueda en anchura:")
 print(search.breadth_first_graph_search(ab).path())
+print("Búsqueda en profundidad:")
 print(search.depth_first_graph_search(ab).path())
-print(search.shortest_first_graph_search(ab).path())
-print(search.intell_first_graph_search(ab).path())
+
+print("Branch and bound: (AB)")
+print(search.branch_and_bound(ab).path())
+print("Branch and bound con heuristica: (AB)")
+print(search.branch_and_bound_with_heuristic(ab).path())
+
+print("Branch and bound: (OB)")
+print(search.branch_and_bound(ob).path())
+print("Branch and bound con heuristica: (OB)")
+print(search.branch_and_bound_with_heuristic(ob).path())
 
 # Result:
 # [<Node B>, <Node F>, <Node S>, <Node A>] : 211 + 99 + 140 = 450

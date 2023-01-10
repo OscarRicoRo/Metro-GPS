@@ -585,7 +585,8 @@ class ShortestQueue(Queue):
 class IntellQueue(Queue):
     """A Shortest Queue."""
 
-    def __init__(self, h):
+    def __init__(self, problem, h):
+        self.problem = problem
         self.h = h
         self.A = []
         self.start = 0
@@ -599,6 +600,7 @@ class IntellQueue(Queue):
     def extend(self, items):
         self.A.extend(items)
         self.A.sort(key=lambda x: self.h(x) + x.path_cost)
+        # self.A.sort(key= lambda x: Queue.h(self, x, self.problem) + x.path_cost)
 
     def pop(self):
         e = self.A[self.start]

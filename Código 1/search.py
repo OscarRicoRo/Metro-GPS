@@ -4,7 +4,6 @@ The way to use this code is to subclass Problem to create a class of problems,
 then create problem instances and solve them with calls to the various search
 functions."""
 
-
 from utils import *
 import random
 import sys
@@ -98,32 +97,40 @@ def graph_search(problem, fringe):
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
     closed = {}
     fringe.append(Node(problem.initial))
+    visited = 0
+    generated = 0
     while fringe:
         node = fringe.pop()
+        generated += 1
         if problem.goal_test(node.state):
+            print("Nodos expandidos: " + str(generated))
+            print("Nodos visitados: " + str(visited))
             return node
         if node.state not in closed:
+            visited += 1
             closed[node.state] = True
             fringe.extend(node.expand(problem))
     return None
-
 
 
 def breadth_first_graph_search(problem):
     """Search the shallowest nodes in the search tree first. [p 74]"""
     return graph_search(problem, FIFOQueue())  # FIFOQueue -> fringe
 
+
 def depth_first_graph_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
     return graph_search(problem, Stack())
 
-def shortest_first_graph_search(problem):
+
+def branch_and_bound(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
     return graph_search(problem, ShortestQueue())
 
-def intell_first_graph_search(problem):
+
+def branch_and_bound_with_heuristic(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
-    return graph_search(problem, IntellQueue(problem.h))
+    return graph_search(problem, IntellQueue(problem, problem.h))
 
 
 # _____________________________________________________________________________
